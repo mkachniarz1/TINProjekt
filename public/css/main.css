@@ -85,6 +85,13 @@ h1
 .form_signin
 {
     padding-right: 20px;
+    text-decoration-line: none;
+}
+
+.form_signup
+{
+    padding-right: 20px;
+    text-decoration: none;
 }
 /* .form_content
 {
