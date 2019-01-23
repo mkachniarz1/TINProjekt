@@ -11,5 +11,7 @@ exports.signin = (req, res) => {
 };
 
 exports.signup = (req, res) => {
-    res.render('signup');
+    res.render('signup', {
+            validated: req.body
+    });
 };

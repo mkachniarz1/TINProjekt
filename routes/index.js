@@ -1,11 +1,19 @@
 const express = require('express');
 const router = express.Router();
 
-const pagesController = require('../controllers/PagesController');
+const PagesController = require('../controllers/PagesController');
+const SignController = require('../controllers/SignController');
 
-router.get('/', pagesController.home);
-router.get('/about', pagesController.about);
-router.get('/signin', pagesController.signin);
-router.get('/signup', pagesController.signup);
+const errorHandler = require('../middlewares/errors');
+
+router.get('/', PagesController.home);
+router.get('/about', PagesController.about);
+router.get('/signin', PagesController.signin);
+router.get('/signup', PagesController.signup);
+
+router.post('/signup',
+    SignController.validate,
+    SignController.checkValidation,
+    errorHandler.catchAsync(SignController.signup));
 
 module.exports = router;

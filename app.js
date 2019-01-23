@@ -3,6 +3,8 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const routes = require('./routes/index');
+const flash = require('connect-flash');
+const session = require('express-session');
 
 const app = express();
 
@@ -14,6 +16,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cookieParser());
+
+app.use(flash());
 
 app.use('/', routes);
 
