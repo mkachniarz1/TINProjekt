@@ -16,4 +16,6 @@ router.post('/signup',
     SignController.checkValidation,
     errorHandler.catchAsync(SignController.signup));
 
+router.post('/signin', SignController.singin);
+
 module.exports = router;

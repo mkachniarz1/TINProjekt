@@ -17,6 +17,8 @@ html(lang="en")
         .form_box
             h2.form_header Signing up...
             form.form(action="/signup" method="POST")
+                if(emailExists)
+                    p.form_error #{emailExistsMsg}
                 .box
                     if(errors && errors.name)
                         p.form_error #{errors.name.msg}                

@@ -1,5 +1,9 @@
 const db = require('../db/Db');
-const { check, validationResult } = require('express-validator/check');
+const { check, validationResult, body } = require('express-validator/check');
+const passport = require('passport');
+const bcrypt = require('bcryptjs');
+
+const User = require('../models/user')
 
 exports.signup = async (req, res, next) => {
 
@@ -14,16 +18,30 @@ exports.signup = async (req, res, next) => {
     } catch (ex) {
         return 
     }
+
     res.redirect('/signin');
 };
 
 exports.validate = [
-    check('name').trim().isLength({min: 3}).withMessage('Name is required.'),
-    check('lastName').trim().isLength({min: 3}).withMessage('Last name is required.'),
-    check('email').isEmail().withMessage('Hmm.. it doesn\'t look like email. Try again.'),
-    check('email').isLength({min: 4}).withMessage('Email is required.'),
-    check('password').isLength({min: 6}).withMessage('Password has to be at least 6 characters long.'),
-    check('repeatPassword').equals('password').withMessage('Passwords are diffrent.')
+    check('name').trim().isLength({ min: 3 }).withMessage('Name is required.'),
+    check('lastName').trim().isLength({ min: 3 }).withMessage('Last name is required.'),
+    check('email').isEmail().withMessage('Hmm.. it doesn\'t look like an email. Try again.'),
+    check('email').isLength({ min: 4 }).withMessage('Email is required.'),
+    check('password').isLength({ min: 6 }).withMessage('Password has to be at least 6 characters long.'),
+    check('password').custom((value, { req, loc, path }) => {
+        if (value !== req.body.repeatPassword) {
+            throw new Error("Passwords don't match");
+        } else {
+            return value;
+        }
+    }).withMessage('Passwords doesn\'t match'),
+    check('email').custom((value, {req, loc, path})=>{
+        if(User.findOne({email: req.body.email})){
+            return value;
+        }else{
+            throw new Error("Email already exists.");
+        }
+    }).withMessage("Email already exists.")
 ];
 
 exports.checkValidation = (req, res, next) => {
@@ -39,13 +57,12 @@ exports.checkValidation = (req, res, next) => {
     next();
 };
 
-exports.checkPassword = (req, res, next) => {
-    if (req.body.password === req.body.repeatPassword) {
-        next();
-    } else {
-
-    }
-};
 
 
-
+exports.singin = (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect: '/',
+        successFlash: 'You\'ve been signed in !',
+        failureRedirect: '/signin',
+    });
+}
