@@ -1,0 +1,21 @@
+extends ribbon
+
+block content
+    .form_box
+        h2.form_header New company
+        form.form(action="/addcompany" method="POST")
+            .box
+                label.form_label Name
+                input.form_input(placeholder="Company name" type="text" name="name")
+            .box
+                label.form_label Address
+                input.form_input(placeholder="Hoża 3 Warszawa" type="text" name="address" )
+            .box
+                label.form_label Speciality
+                input.form_input(placeholder="IT" type="text" name="speciality")
+            .box
+                button.form_submit Add
+            br
+            a.form_signup(href="/companies") Go back to list.
+
+    

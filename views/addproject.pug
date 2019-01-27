@@ -1,0 +1,22 @@
+extends ribbon
+
+block content
+    .form_box
+        h2.form_header New project
+        form.form(action="/addproject" method="POST")
+            .box
+                label.form_label Name
+                input.form_input(placeholder="Jan" type="text" name="name")
+            .box
+                label.form_label Value
+                input.form_input(placeholder="$$$" type="number" name="value" )
+            .box
+                label.form_label Due date
+                input.form_input(placeholder="01.01.2019" type="date" name="date")
+            .box
+                label.form_label Type
+                input.form_input(placeholder="IT" type="text" name="type")
+            .box
+                button.form_submit Add
+            br
+            a.form_signup(href="/projects") Go back to list.

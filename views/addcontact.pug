@@ -1,0 +1,24 @@
+extends ribbon
+
+block content
+    .form_box
+        h2.form_header New contact
+        form.form(action="/addcontact" method="POST")
+            .box
+                label.form_label Name
+                input.form_input(placeholder="Jan" type="text" name="name")
+            .box
+                label.form_label Last name
+                input.form_input(placeholder="Kowalski" type="text" name="lastName" )
+            .box
+                label.form_label Email
+                input.form_input(placeholder="jan.kowalski@gmail.com" type="text" name="email")
+            .box
+                label.form_label Phone
+                input.form_input(placeholder="555 666 777" type="text" name="phone")
+            .box
+                button.form_submit Add
+            br
+            a.form_signup(href="/contacts") Go back to list.
+
+    

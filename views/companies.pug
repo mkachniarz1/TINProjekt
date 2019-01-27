@@ -1,0 +1,22 @@
+extends ribbon
+
+block content
+    h1.title Companies !
+    .table
+        table   
+            thead
+                tr
+                    th Name
+                    th Address
+                    th Speciality
+                    th
+            tbody        
+                each company in list
+                    tr
+                        td #{company.name}
+                        td #{company.address}
+                        td #{company.speciality}
+                        td 
+                            a(href='/deletecompany/#{company.id}') Delete
+                            a(href='/editcompany/#{company.id}') Edit
+    a.add(href='/addcompany') Create new company

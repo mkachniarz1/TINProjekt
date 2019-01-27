@@ -1,5 +1,8 @@
-exports.home = (req,res) => {
-    res.render('home');  
+const db = require('../db/Db');
+const Contact = require('../models/contact');
+
+exports.home = (req, res) => {
+    res.render('home');
 };
 
 exports.about = (req, res) => {
@@ -12,6 +15,10 @@ exports.signin = (req, res) => {
 
 exports.signup = (req, res) => {
     res.render('signup', {
-            validated: req.body
+        validated: req.body
     });
 };
+
+
+
+

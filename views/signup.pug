@@ -1,52 +1,39 @@
-<!DOCTYPE html>
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        meta(http-equiv="X-UA-Compatible", content="ie=edge")
-        link(rel="stylesheet" href="/css/main.css")
-        link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat")
-        link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum  +Gothic")
-        title TIN-PROJEKT
-    body
-        .ribbon 
-            a(href='/') Home
-            a(href='/about') About
-            a(href='/signin') Sign in
-            a(href='/signup') Sign up
-        .form_box
-            h2.form_header Signing up...
-            form.form(action="/signup" method="POST")
-                if(emailExists)
-                    p.form_error #{emailExistsMsg}
-                .box
-                    if(errors && errors.name)
-                        p.form_error #{errors.name.msg}                
-                    label.form_label Name
-                    input.form_input(placeholder="Jan" type="text" name="name" value=validated ? validated.name : '')
-                .box
-                    if(errors && errors.lastName)
-                        p.form_error #{errors.lastName.msg}
-                    label.form_label Last name
-                    input.form_input(placeholder="Kowalski" type="text" name="lastName"  value=validated ? validated.lastName : '')
-                .box
-                    if(errors && errors.email)
-                        p.form_error #{errors.email.msg}
-                    label.form_label Email
-                    input.form_input(placeholder="jan.kowalski@gmail.com" type="text" name="email" value=validated ? validated.email : '')
-                .box
-                    if(errors && errors.password)
-                        p.form_error #{errors.password.msg}
-                    label.form_label Set up a password
-                    input.form_input(placeholder="********" type="password" name="password")
-                .box
-                    if(errors && errors.repeatPassword)
-                        p.form_error #{errors.repeatPassword.msg}
-                    label.form_label Repeat password
-                    input.form_input(placeholder="********" type="password" name="repeatPassword")
-                .box
-                    button.form_submit Sign up
-                br
-                a.form_signup(href="/signin") Already have an account ? Sing in !
+extends ribbon
+
+block content
+    .form_box
+        h2.form_header Signing up...
+        form.form(action="/signup" method="POST")
+            if(emailExists)
+                p.form_error #{emailExistsMsg}
+            .box
+                if(errors && errors.name)
+                    p.form_error #{errors.name.msg}                
+                label.form_label Name
+                input.form_input(placeholder="Jan" type="text" name="name" value=validated ? validated.name : '')
+            .box
+                if(errors && errors.lastName)
+                    p.form_error #{errors.lastName.msg}
+                label.form_label Last name
+                input.form_input(placeholder="Kowalski" type="text" name="lastName"  value=validated ? validated.lastName : '')
+            .box
+                if(errors && errors.email)
+                    p.form_error #{errors.email.msg}
+                label.form_label Email
+                input.form_input(placeholder="jan.kowalski@gmail.com" type="text" name="email" value=validated ? validated.email : '')
+            .box
+                if(errors && errors.password)
+                    p.form_error #{errors.password.msg}
+                label.form_label Set up a password
+                input.form_input(placeholder="********" type="password" name="password")
+            .box
+                if(errors && errors.repeatPassword)
+                    p.form_error #{errors.repeatPassword.msg}
+                label.form_label Repeat password
+                input.form_input(placeholder="********" type="password" name="repeatPassword")
+            .box
+                button.form_submit Sign up
+            br
+            a.form_signup(href="/signin") Already have an account ? Sing in !
 
     

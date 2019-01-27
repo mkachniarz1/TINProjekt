@@ -1,0 +1,27 @@
+extends ribbon
+
+block content
+    h1.title Contacts
+    .table
+        table   
+            thead
+                tr
+                    th Name
+                    th Last name
+                    th Email
+                    th Phone
+                    th
+            tbody
+                each contact in list
+                    tr(onclick="window.l")
+                        td #{contact.name}
+                        td #{contact.lastName}
+                        td #{contact.email}
+                        td #{contact.phone}
+                        td 
+                            a(href='/deletecontact/' + contact._id) Delete
+                            br
+                            a(href='/editcontact/' + contact._id) Edit
+    a.add(href='/addcontact') Create new contact
+    
+                

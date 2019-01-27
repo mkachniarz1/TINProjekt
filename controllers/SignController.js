@@ -7,14 +7,21 @@ const User = require('../models/user')
 
 exports.signup = async (req, res, next) => {
 
-    var item = {
+    var user =  new User({
         name: req.body.name,
         lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password
-    };
+    });
+
+    bcrypt.genSalt(10,(err, salt) => {
+        bcrypt.hash(user.password, salt, (err, hash) =>{
+            if(err) throw err;
+            user.password = hash;
+        });
+    });
     try {
-        await db.addItem('customers', item);
+        await db.addItem('users', user);
     } catch (ex) {
         return 
     }
@@ -59,10 +66,10 @@ exports.checkValidation = (req, res, next) => {
 
 
 
-exports.singin = (req, res, next) => {
-    passport.authenticate('local', {
-        successRedirect: '/',
-        successFlash: 'You\'ve been signed in !',
-        failureRedirect: '/signin',
-    });
-}
+// exports.singin = (req, res, next) => {
+//     passport.authenticate('mydb', {
+//         successRedirect: '/',
+//         successFlash: 'You\'ve been signed in !',
+//         failureRedirect: '/signin',
+//     });
+// }
