@@ -43,5 +43,6 @@ router.get('/addproject', ProjectController.addproject);
 router.post('/addproject', ProjectController.addnewproject);
 router.get('/editproject/:projectid', ProjectController.editproject);
 router.post('/updateproject/:projectid', ProjectController.updateproject);
+router.get('/deleteproject/:projectid', ProjectController.deleteproject);
 
 module.exports = router;

@@ -73,3 +73,16 @@ exports.updateproject = (req, res) => {
     });
     res.redirect('/projects');
 };
+
+exports.deleteproject = (req, res) => {
+    mongo.connect(url, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db('mydb');
+        var myquery = { _id: new ObjectId(req.params.projectid) };
+        dbo.collection("project").deleteOne(myquery, function (err, result) {
+            if (err) throw err;
+            db.close();
+        });
+    });
+    res.redirect('/projects');
+};
