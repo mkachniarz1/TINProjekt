@@ -19,9 +19,9 @@ block content
                         td #{project.date}
                         td #{project.type}
                         td 
-                            a(href='/deleteproject/#{project.id}') Delete
+                            a(href='/deleteproject/'+project._id) Delete
                             br
-                            a(href='/editproject/#{project.id}') Edit
+                            a(href='/editproject/'+project._id) Edit
     a.add(href='/addproject') Create new project
 
 

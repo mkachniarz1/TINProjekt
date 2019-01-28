@@ -3,22 +3,22 @@ extends ribbon
 block content
     .form_box
         h2.form_header Edit project
-        form.form(action="/addproject/" +project._id} method="POST")
+        form.form(action='/updateproject/' +project._id method="POST")
             .box
                 label.form_label Name
-                input.form_input(placeholder="Jan" type="text" name="name" value=contact ? contact.name : '')
+                input.form_input(placeholder="Project name" type="text" name="name" value=project ? project.name : '')
             .box
-                label.form_label Last name
-                input.form_input(placeholder="Kowalski" type="text" name="lastName" value=contact ? contact.lastName : '')
+                label.form_label Type
+                input.form_input(placeholder="Web service" type="text" name="type" value=project ? project.type : '')
             .box
-                label.form_label Email
-                input.form_input(placeholder="jan.kowalski@gmail.com" type="text" name="email" value=contact ? contact.email : '')
+                label.form_label Value
+                input.form_input(placeholder="$$$$" type="number" name="value" value=project ? project.value : '')
             .box
-                label.form_label Phone
-                input.form_input(placeholder="555 666 777" type="text" name="phone" value=contact ? contact.phone : '')
+                label.form_label Due Date
+                input.form_input(placeholder="01.01.2020" type="date" name="date" value=project ? project.date : '')
             .box
                 button.form_submit Save changes
             br
-            a.form_signup(href="/contacts") Go back to list.
+            a.form_signup(href="/projects") Go back to list.
 
     

@@ -61,7 +61,7 @@ exports.deletecompany = (req, res) => {
     mongo.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db('mydb');
-        var myquery = { _id: new ObjectId(req.params.company) };
+        var myquery = { _id: new ObjectId(req.params.companyid) };
         dbo.collection("company").deleteOne(myquery, function (err, result) {
             if (err) throw err;
             db.close();

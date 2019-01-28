@@ -2,6 +2,8 @@ const db = require('../db/Db');
 const mongo = require('mongodb').MongoClient;
 const url = "mongodb://localhost:27017/mydb";
 const Project = require('../models/project');
+const ObjectId = require('mongodb').ObjectId;
+
 
 exports.projects = (req, res) => {
     mongo.connect(url, function (err, db) {
@@ -48,4 +50,26 @@ exports.editproject = (req, res) => {
             };
         });
     });
+};
+
+exports.updateproject = (req, res) => {
+    mongo.connect(url, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db("mydb");
+        var myquery = { _id: new ObjectId(req.params.projectid) };
+        var newvalues = {
+            $set:
+            {
+                name: req.body.name,
+                type: req.body.type,
+                value: req.body.value,
+                date: req.body.date
+            }
+        };
+        dbo.collection("project").updateOne(myquery, newvalues, function (err, result) {
+            if (err) throw err;
+            db.close();
+        });
+    });
+    res.redirect('/projects');
 };

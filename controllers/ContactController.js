@@ -6,7 +6,6 @@ const ObjectId = require('mongodb').ObjectId;
 const Contact = require('../models/contact');
 
 exports.contacts = (req, res) => {
-
     mongo.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("mydb");

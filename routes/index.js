@@ -34,13 +34,14 @@ router.get('/deletecontact/:contactid', ContactController.deletecontact);
 router.get('/companies', CompanyController.companies);
 router.get('/addcompany', CompanyController.addcompany);
 router.post('/addcompany', CompanyController.addnewcompany);
-router.post('/deletecompany/:companyid', CompanyController.deletecompany);
+router.get('/deletecompany/:companyid', CompanyController.deletecompany);
 router.get('/editcompany/:companyid', CompanyController.editcompany)
 router.post('/updatecompany/:companyid', CompanyController.updatecompany)
 
 router.get('/projects', ProjectController.projects);
 router.get('/addproject', ProjectController.addproject);
 router.post('/addproject', ProjectController.addnewproject);
-router.get('/editprojec/:projectid', ProjectController.editproject);
+router.get('/editproject/:projectid', ProjectController.editproject);
+router.post('/updateproject/:projectid', ProjectController.updateproject);
 
 module.exports = router;
