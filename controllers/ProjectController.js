@@ -36,3 +36,16 @@ exports.addnewproject = async (req, res, next) => {
     res.redirect('/projects');
 };
 
+exports.editproject = (req, res) => {
+    mongo.connect(url, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db('mydb');
+        var query = { _id: new ObjectId(req.params.projectid) };
+        dbo.collection('project').findOne(query, function (err, result) {
+            if (err) console.log(err);
+            else {
+                res.render('editproject', { project: result })
+            };
+        });
+    });
+};

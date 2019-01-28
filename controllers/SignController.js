@@ -2,28 +2,42 @@ const db = require('../db/Db');
 const { check, validationResult, body } = require('express-validator/check');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
+const mongo = require('mongodb').MongoClient;
+const url = "mongodb://localhost:27017/mydb";
 
 const User = require('../models/user')
 
 exports.signup = async (req, res, next) => {
 
-    var user =  new User({
+    var user = new User({
         name: req.body.name,
         lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password
     });
 
-    bcrypt.genSalt(10,(err, salt) => {
-        bcrypt.hash(user.password, salt, (err, hash) =>{
-            if(err) throw err;
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(user.password, salt, (err, hash) => {
+            if (err) throw err;
             user.password = hash;
         });
     });
     try {
-        await db.addItem('users', user);
+        mongo.connect(url, function (err, db) {
+            if (err) throw err;
+            var dbo = db.db('mydb');
+            var query = { email: req.body.email };
+            dbo.collection('contact').findOne(query, function (err, result) {
+                if (err) console.log(err);
+                if (result) {
+                    console.log('email exists.');
+                    return;
+                }
+            });
+        });
+        db.addItem('users', user);
     } catch (ex) {
-        return 
+        return
     }
 
     res.redirect('/signin');
@@ -42,10 +56,10 @@ exports.validate = [
             return value;
         }
     }).withMessage('Passwords doesn\'t match'),
-    check('email').custom((value, {req, loc, path})=>{
-        if(User.findOne({email: req.body.email})){
+    check('email').custom((value, { req, loc, path }) => {
+        if (User.findOne({ email: req.body.email })) {
             return value;
-        }else{
+        } else {
             throw new Error("Email already exists.");
         }
     }).withMessage("Email already exists.")
@@ -64,6 +78,13 @@ exports.checkValidation = (req, res, next) => {
     next();
 };
 
+exports.signin = (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect: '/home',
+        failureRedirect: '/signin',
+        failureFlash: true
+    })(req, res, next);
+};
 
 
 // exports.singin = (req, res, next) => {

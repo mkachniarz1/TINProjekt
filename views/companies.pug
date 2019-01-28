@@ -17,6 +17,7 @@ block content
                         td #{company.address}
                         td #{company.speciality}
                         td 
-                            a(href='/deletecompany/#{company.id}') Delete
-                            a(href='/editcompany/#{company.id}') Edit
+                            a(href='/deletecompany/'+company._id) Delete
+                            br
+                            a(href='/editcompany/'+company._id) Edit
     a.add(href='/addcompany') Create new company

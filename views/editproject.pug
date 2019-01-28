@@ -2,8 +2,8 @@ extends ribbon
 
 block content
     .form_box
-        h2.form_header Edit contact
-        form.form(action='/updatecontact/'+contact._id method="POST")
+        h2.form_header Edit project
+        form.form(action="/addproject/" +project._id} method="POST")
             .box
                 label.form_label Name
                 input.form_input(placeholder="Jan" type="text" name="name" value=contact ? contact.name : '')

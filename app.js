@@ -31,6 +31,8 @@ app.use(passport.session());
 
 app.use(flash());
 
+require('./config/passportConfig')(passport);
+
 app.use('/', routes);
 
 module.exports = app;
