@@ -7,7 +7,7 @@ const url = "mongodb://localhost:27017/mydb";
 
 const User = require('../models/user')
 
-exports.signup = async (req, res, next) => {
+exports.signup =  (req, res, next) => {
 
     var user = new User({
         name: req.body.name,

@@ -17,6 +17,11 @@ block content
                 label.form_label Phone
                 input.form_input(placeholder="555 666 777" type="text" name="phone")
             .box
+                label.form_label Company
+                select.form_input(name="company")
+                    each value in projects
+                        option(value=value._id) #{value.name}
+            .box
                 button.form_submit Add
             br
             a.form_signup(href="/contacts") Go back to list.

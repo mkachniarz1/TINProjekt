@@ -10,6 +10,7 @@ block content
                     th Last name
                     th Email
                     th Phone
+                    th Company
                     th
             tbody
                 each contact in list
@@ -18,6 +19,7 @@ block content
                         td #{contact.lastName}
                         td #{contact.email}
                         td #{contact.phone}
+                        td #{contact.cname}
                         td 
                             a(href='/deletecontact/' + contact._id) Delete
                             br

@@ -11,7 +11,22 @@ exports.contacts = (req, res) => {
         var dbo = db.db("mydb");
         dbo.collection('contact').find({}).toArray(function (err, result) {
             if (err) throw err;
-            res.render('contacts', { list: result });
+            result.forEach(function (contact, index) {
+                if (contact.company) {
+                    var query = { _id: contact.company };
+                    dbo.collection('company').findOne(query, function (err, company) {
+                        if (company) {
+                            console.log(index);
+                            contact.cname = company.name;
+                            if (index == result.length - 1){
+                                res.render('contacts', {list: result});
+                                return;
+                            }
+                        }
+                    });
+                }
+            });
+            db.close();
         });
     });
 };
@@ -21,7 +36,8 @@ exports.addnewcontact = async (req, res, next) => {
         name: req.body.name,
         lastName: req.body.lastName,
         email: req.body.email,
-        phone: req.body.phone
+        phone: req.body.phone,
+        company: new ObjectId(req.body.company)
     });
 
     try {
@@ -41,15 +57,29 @@ exports.editcontact = (req, res) => {
         dbo.collection('contact').findOne(query, function (err, result) {
             if (err) console.log(err);
             else {
-                console.log(result);
-                res.render('editcontact', { contact: result })
+                dbo.collection('company').find({}).toArray(function (err, companies) {
+                    if (err) throw err;
+                    res.render('editcontact',
+                        {
+                            contact: result,
+                            companies: companies
+                        });
+                });
             };
         });
     });
 };
 
 exports.addcontact = (req, res) => {
-    res.render('addcontact');
+    mongo.connect(url, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db("mydb");
+        dbo.collection('company').find({}).toArray(function (err, result) {
+            if (err) throw err;
+            console.log(result);
+            res.render('addcontact', { projects: result });
+        });
+    });
 };
 
 exports.updatecontact = (req, res) => {
@@ -63,7 +93,8 @@ exports.updatecontact = (req, res) => {
                 name: req.body.name,
                 lastName: req.body.lastName,
                 email: req.body.email,
-                phone: req.body.phone
+                phone: req.body.phone,
+                company: new ObjectId(req.body.company)
             }
         };
         dbo.collection("contact").updateOne(myquery, newvalues, function (err, result) {
