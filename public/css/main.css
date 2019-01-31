@@ -148,3 +148,13 @@ td a
 }
 
 tr:hover {background-color: #ddd;}
+
+.propbox
+{
+    display: flex;
+    flex-direction: row; 
+    width: 300px;
+    justify-content: space-between;
+    border: solid #30C29E;
+    margin: 5px 0 0 0;
+}

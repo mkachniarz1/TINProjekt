@@ -1,17 +1,17 @@
 const mongoose = require('mongoose');
 const ObjectId = require('mongodb').ObjectId;
 
-const companyprojectSchema = new mongoose.Schema({
+const contactprojectSchema = new mongoose.Schema({
     project: {
         type: ObjectId,
         required: true
     },
-    company: {
+    contact: {
         type: ObjectId,
         required: true
     }
 });
 
-const companyproject = mongoose.model('companyproject', companySchema);
+const contactproject = mongoose.model('contactproject', contactprojectSchema);
 
-module.exports = companyproject;
+module.exports = contactproject;

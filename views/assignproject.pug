@@ -1,0 +1,13 @@
+extends ribbon
+
+block content
+    .form_box
+        h2 #{contact.name} #{contact.lastName}
+        form.form(action='/assignproject/' + contact._id method="POST")
+            .box
+                label.form_label Project
+                select.form_input(name="project")
+                    each value in projects
+                        option(value=value._id) #{value.name} 
+            .box
+                button.form_submit Assign

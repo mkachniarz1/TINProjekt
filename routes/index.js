@@ -6,6 +6,7 @@ const SignController = require('../controllers/SignController');
 const ContactController = require('../controllers/ContactController');
 const CompanyController = require('../controllers/CompanyController');
 const ProjectController = require('../controllers/ProjectController');
+const ContactProjectController = require('../controllers/ContactProjectController');
 
 const { ifSignedIn } = require('../config/authentication');
 
@@ -24,6 +25,9 @@ router.post('/signup',
     errorHandler.catchAsync(SignController.signup));
 
 router.get('/contacts', ContactController.contacts);
+router.get('/contactdetails/:contactid',
+    ContactController.contactdetails,
+    ContactController.getprojects);
 router.get('/addcontact', ContactController.addcontact);
 router.post('/addcontact', ContactController.addnewcontact);
 router.get('/editcontact/:contactid', ContactController.editcontact);
@@ -44,5 +48,7 @@ router.post('/addproject', ProjectController.addnewproject);
 router.get('/editproject/:projectid', ProjectController.editproject);
 router.post('/updateproject/:projectid', ProjectController.updateproject);
 router.get('/deleteproject/:projectid', ProjectController.deleteproject);
+
+router.get('/assignproject/:contactid', ContactProjectController.assignproject);
 
 module.exports = router;

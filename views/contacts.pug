@@ -14,7 +14,7 @@ block content
                     th
             tbody
                 each contact in list
-                    tr
+                    tr(onclick=`window.location='/contactdetails/${contact._id}'`)
                         td #{contact.name}
                         td #{contact.lastName}
                         td #{contact.email}
@@ -25,5 +25,4 @@ block content
                             br
                             a(href='/editcontact/' + contact._id) Edit
     a.add(href='/addcontact') Create new contact
-    
                 

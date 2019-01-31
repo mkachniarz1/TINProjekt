@@ -18,8 +18,8 @@ exports.contacts = (req, res) => {
                         if (company) {
                             console.log(index);
                             contact.cname = company.name;
-                            if (index == result.length - 1){
-                                res.render('contacts', {list: result});
+                            if (index == result.length - 1) {
+                                res.render('contacts', { list: result });
                                 return;
                             }
                         }
@@ -116,4 +116,67 @@ exports.deletecontact = (req, res) => {
         });
     });
     res.redirect('/contacts');
+};
+
+// exports.contactdetails = (req, res) => {
+//     mongo.connect(url, function (err, db) {
+//         if (err) throw err;
+//         var dbo = db.db('mydb');
+//         var myquery = { _id: new ObjectId(req.params.contactid) };
+//         dbo.collection("contact").findOne(myquery, function (err, result) {
+//             if (err) throw err;
+//             dbo.collection('company').findOne({ _id: result.company }, function (err, company) {
+//                 console.log(company);
+//                 if (err) throw err;
+//                 dbo.collection('contactproject').find({ contact: result._id }, function (err, projects) {
+//                     if (err) throw err;
+//                     projects.forEach((value, index) => {
+//                         dbo.collection('project').findOne({ _id: value.project }, function (err, project) {
+//                             if (project) {
+//                                 value.name = project.name;
+//                             }
+
+//                             if (index == projects.length - 1) {
+//                                 res.render('contactdetails',
+//                                     {
+//                                         contact: result,
+//                                         company: company,
+//                                         list: projects
+//                                     });
+//                                 return;
+//                             }
+//                         });
+//                     });
+//                 });
+//             });
+//             db.close();
+//         });
+//     });
+// };
+exports.contactdetails = (req, res, next) => {
+    mongo.connect(url, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db("mydb");
+        dbo.collection('contact').findOne({ _id: new ObjectId(req.params.contactid) }, function (err, result) {
+            if (err) throw err;
+            req.contact = result;
+            console.log(result);
+            next();
+        });
+    });
+};
+
+
+exports.getprojects = (req, res, next) => {
+    mongo.connect(url, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db("mydb");
+        dbo.collection('contactproject').find({ contact: new ObjectId(req.params.contactid) }).toArray(function (err, result) {
+            if (err) throw err;
+            console.log(req.contact);
+            res.render('contactdetails', {
+                contact: req.contact
+            });
+        });
+    });
 };
