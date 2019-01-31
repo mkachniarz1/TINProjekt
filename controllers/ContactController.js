@@ -173,9 +173,24 @@ exports.getprojects = (req, res, next) => {
         var dbo = db.db("mydb");
         dbo.collection('contactproject').find({ contact: new ObjectId(req.params.contactid) }).toArray(function (err, result) {
             if (err) throw err;
-            console.log(req.contact);
-            res.render('contactdetails', {
-                contact: req.contact
+
+            result.forEach((contactproject, index) => {
+                dbo.collection('project').findOne({ _id: contactproject.project }, function (err, project) {
+                    if (err) throw err;
+                    console.log('getprojects');
+                    console.log(contactproject);
+                    console.log(project);
+                    if (project) {
+                        contactproject.name = project.name;
+                        if (index == result.length - 1) {
+                            res.render('contactdetails', {
+                                contact: req.contact,
+                                list: result
+                            });
+                            return;
+                        }
+                    }
+                });
             });
         });
     });

@@ -1,16 +1,15 @@
 extends ribbon
 
 block content
-    h2 #{contact.name} #{contact.lastName}
-    h1.title Projects
-    //- .table
-    //-     table   
-    //-         thead
-    //-             tr
-    //-                 th Project
-    //-         tbody
-    //-             if (list != null)
-    //-                 each project in list
-    //-                     tr
-    //-                         td {project.name}
+    h2.title #{contact.name} #{contact.lastName}
+    h3.title Projects
+    .table
+        table   
+            thead
+                tr
+                    th Project
+            tbody
+                each project in list
+                    tr
+                        td #{project.name}
     a.add(href='/assignproject/' + contact._id) Assign new project
